@@ -1,5 +1,6 @@
 import com.wenyb.bean.Poet;
 import com.wenyb.config.MainConfig;
+import com.wenyb.config.PoetConfig;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -53,5 +54,17 @@ public class PoetTest {
         for (String beanDefinitionName : beanDefinitionNames) {
             System.out.println(beanDefinitionName);
         }
+    }
+
+    /**
+     * 注解:@Scope单元测试
+     */
+    @Test
+    public void testScopeAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(PoetConfig.class);
+        System.out.println("IOC容器创建完成........");
+        Poet bean1 = applicationContext.getBean(Poet.class);
+        Poet bean2 = applicationContext.getBean(Poet.class);
+        System.out.println(bean1 == bean2);
     }
 }
