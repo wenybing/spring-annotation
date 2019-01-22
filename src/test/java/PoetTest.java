@@ -30,4 +30,28 @@ public class PoetTest {
             System.out.println(s);
         }
     }
+
+    /**
+     * 测试xml配置版自动扫描的包
+     */
+    @Test
+    public void testComponentScanForxml() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean.xml");
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for (String name : beanDefinitionNames) {
+            System.out.println(name);
+        }
+    }
+
+    /**
+     * 测试注解版指定要扫描的包
+     */
+    @Test
+    public void testComponentScanForAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            System.out.println(beanDefinitionName);
+        }
+    }
 }
