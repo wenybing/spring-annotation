@@ -67,4 +67,16 @@ public class PoetTest {
         Poet bean2 = applicationContext.getBean(Poet.class);
         System.out.println(bean1 == bean2);
     }
+
+    /**
+     * 测试@Lazy注解
+     */
+    @Test
+    public void testLazyAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(PoetConfig.class);
+        System.out.println("IOC容器创建完成........");
+        Poet bean1 = applicationContext.getBean(Poet.class);
+        Poet bean2 = applicationContext.getBean(Poet.class);
+        System.out.println(bean1 == bean2);
+    }
 }
