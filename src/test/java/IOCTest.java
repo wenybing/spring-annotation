@@ -1,12 +1,11 @@
 import com.wenyb.bean.Poet;
-import com.wenyb.config.AutowiredConfig;
-import com.wenyb.config.BeanLifeCycleConfig;
-import com.wenyb.config.CatConfig;
-import com.wenyb.config.PoetMainConfig;
+import com.wenyb.config.*;
 import com.wenyb.service.PoetService;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.sql.DataSource;
 
 /**
  * @Author wenyabing
@@ -85,6 +84,43 @@ public class IOCTest {
 //        System.out.println(bean);
         Object poetDao01 = applicationContext.getBean(PoetService.class);
         System.out.println(poetDao01);
+    }
+
+    /**
+     * 测试@Profile注解
+     */
+    @Test
+    public void testProfileAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(DataSourceConfig.class);
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(DataSource.class);
+        for (String name : beanNamesForType) {
+            System.out.println(name);
+        }
+        /**使用@Profile注解：
+         *  激活环境的方式有两种
+         *  1.命令行方式：修改vm参数：-Dspring.profiles.active=dev
+         *  2.代码的方式
+         */
+
+    }
+
+    /**
+     * 测试通过代码方式激活环境
+     */
+    @Test
+    public void testActiveProfile() {
+        //1.创建applicationContext
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        //2.设置需要激活的环境
+        applicationContext.getEnvironment().setActiveProfiles("pro");
+        //3.注册配置类
+        applicationContext.register(DataSourceConfig.class);
+        //4.启动刷新容器
+        applicationContext.refresh();
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(DataSource.class);
+        for (String s : beanNamesForType) {
+            System.out.println(s);
+        }
     }
 
 }
